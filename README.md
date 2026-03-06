@@ -29,3 +29,6 @@ Skriptet `02_read_orders.sh` visar fyra olika sätt att läsa data från kollekt
 
 ### Steg 3: Uppdatera dokument (Update)
 Skriptet `03_update_orders.sh` visar tre distinkta uppdateringsoperationer. Med `$set` ändras statusen på visitor-002:s order från `pending` till `processing`. Med `$push` läggs en ny produkt till i `items`-arrayen på visitor-003:s order utan att skriva om hela arrayen. Med `$inc` ökas `totalAmount` med exakt det belopp som den nya produkten tillförde. Varje operation omges av ett `findOne`-anrop före och efter för att göra förändringen synlig i utdata. Vid upprepade körningar bör skriptet föregås av `01_create_seed_orders.sh` för att återställa datan, alternativt kan dokumentets `_id` användas som filter för att garantera ett exakt träff.
+
+### Steg 4: Radera dokument (Delete)
+Skriptet `04_delete_orders.sh` demonstrerar två raderingsoperationer. Med `deleteOne` tas den avbrutna ordern för `visitor-005` bort, ett mönster som speglar hur avbrutna transaktioner kan rensas från en aktiv kollektion. Med `deleteMany` raderas samtliga ordrar vars `totalAmount` understiger 115 kronor, vilket visar hur ett villkorsbaserat filter kan påverka flera dokument i ett enda anrop. Antalet kvarvarande dokument skrivs ut efter varje operation och kollektionen ska efter detta steg innehålla exakt tio dokument.
