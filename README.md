@@ -23,3 +23,6 @@ Därefter är `mongosh` tillgängligt mot `localhost:27017`.
 
 ### Steg 1: Skapa dokument (Create)
 Skriptet `01_create_seed_orders.sh` skapar kollektionen `orders` i databasen `devops25_nosql` och fyller den med femton orderdokument från en fiktiv svensk souvenirbutik. Fem kunder används genomgående i datan, identifierade som `visitor-001` till `visitor-005`. Produktsortimentet består av arton distinkta souvenirer, från dalahästar och vikingahjälmar till samiska armband och lapplandshalsdukar. Fältet `totalAmount` är förutsummat utifrån kvantitet och pris per produkt. Statusalternativen som förekommer är `delivered`, `shipped`, `pending` och `cancelled`. Anslutningen till MongoDB sker via `docker exec` mot en körande container.
+
+### Steg 2: Hämta dokument (Read)
+Skriptet `02_read_orders.sh` visar fyra olika sätt att läsa data från kollektionen. Först hämtas samtliga ordrar kopplade till en enskild kund med ett exakt matchningsfilter. Därefter används en jämförelseoperator för att hitta ordrar vars `totalAmount` överstiger 1000 kronor. Sedan sorteras hela kollektionen på `totalAmount` i fallande ordning för att ge en överblick av köpen efter värde. Slutligen kombineras sortering och begränsning för att returnera de fem dyraste ordrarna. Projektionsparametern används för att hålla utdata läsbar.

@@ -3,7 +3,7 @@
 # Kör med: bash 01_create_orders.sh
 # Kräver: mongosh och att MongoDB körs på localhost:27017
 
-docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<EOF
+docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<'EOF'
 
 db.orders.drop();
 
