@@ -20,3 +20,6 @@ Detta tillvägagångssätt ger flera fördelar:
 Innan skripten körs startas MongoDB med ett enkelt Docker-kommando:
 `docker run -d --name mongodb -p 27017:27017 mongo:latest`
 Därefter är `mongosh` tillgängligt mot `localhost:27017`.
+
+### Steg 1: Skapa dokument (Create)
+Skriptet `01_create_seed_orders.sh` skapar kollektionen `orders` i databasen `devops25_nosql` och fyller den med femton orderdokument från en fiktiv svensk souvenirbutik. Fem kunder används genomgående i datan, identifierade som `visitor-001` till `visitor-005`. Produktsortimentet består av arton distinkta souvenirer, från dalahästar och vikingahjälmar till samiska armband och lapplandshalsdukar. Fältet `totalAmount` är förutsummat utifrån kvantitet och pris per produkt. Statusalternativen som förekommer är `delivered`, `shipped`, `pending` och `cancelled`. Anslutningen till MongoDB sker via `docker exec` mot en körande container.
