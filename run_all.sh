@@ -36,8 +36,8 @@ SCRIPTS=(
         echo ""
 
         if [[ ! -f "$SCRIPT" ]]; then
-        echo "      ERROR: $SCRIPT not found. Aborting."
-        exit 1
+            echo "      ERROR: $SCRIPT not found. Aborting."
+            exit 1
         fi
 
         bash "$SCRIPT"
