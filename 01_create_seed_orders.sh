@@ -12,19 +12,19 @@ db.orders.insertMany([
         customerId: "visitor-003",
         createdAt: new Date("2025-02-11"),
         items: [
-            { productId: "souvenir-01", name: "Stockholm Mug", quantity: 2, price: 120 },
-            { productId: "souvenir-02", name: "Swedish Flag Keychain", quantity: 1, price: 50 }
+            { productId: "souvenir-01", name: "Stockholm Mug", quantity: 7, price: 120 },
+            { productId: "souvenir-02", name: "Swedish Flag Keychain", quantity: 5, price: 50 }
         ],
-        totalAmount: 290,
+        totalAmount: 1090,
         status: "shipped"
     },
     {
         customerId: "visitor-001",
         createdAt: new Date("2025-03-05"),
         items: [
-            { productId: "souvenir-03", name: "Viking Helmet", quantity: 1, price: 350 }
+            { productId: "souvenir-03", name: "Viking Helmet", quantity: 3, price: 350 }
         ],
-        totalAmount: 350,
+        totalAmount: 1050,
         status: "delivered"
     },
     {
@@ -59,9 +59,9 @@ db.orders.insertMany([
         customerId: "visitor-002",
         createdAt: new Date("2025-03-18"),
         items: [
-            { productId: "souvenir-08", name: "Sweden T-shirt", quantity: 2, price: 220 }
+            { productId: "souvenir-08", name: "Sweden T-shirt", quantity: 6, price: 220 }
         ],
-        totalAmount: 440,
+        totalAmount: 1320,
         status: "pending"
     },
     {
@@ -114,9 +114,9 @@ db.orders.insertMany([
         customerId: "visitor-005",
         createdAt: new Date("2025-04-01"),
         items: [
-            { productId: "souvenir-15", name: "Sami Bracelet", quantity: 1, price: 250 }
+            { productId: "souvenir-15", name: "Sami Bracelet", quantity: 5, price: 250 }
         ],
-        totalAmount: 250,
+        totalAmount: 1250,
         status: "cancelled"
     },
     {
