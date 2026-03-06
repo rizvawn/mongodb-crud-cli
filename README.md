@@ -1,12 +1,10 @@
-# MongoDB: Från grunden via Linux CLI
+# MongoDB: CRUD-operationer med Bash och mongosh
 
 Detta projekt är en övning med MongoDB där fokus ligger på de mest grundläggande
 koncepten.
 
 ### Varför Bash och CLI?
-Efter att nyligen ha arbetat på Linux och terminalmiljön föll det sig
-naturligt att genomföra denna övning helt och hållet via kommandoraden. Istället för
-att använda MongoDB Atlas + Compass har jag valt att strukturera hela processen i en serie Bash-skript.
+Kommandoraden valdes framför grafiska verktyg som MongoDB Atlas och Compass för att arbeta direkt mot databasen utan mellanlager. Det ger en tydligare förståelse för hur MongoDB faktiskt fungerar. Valet föll sig också naturligt efter en period av aktivt arbete med Linux och terminalmiljön, där CLI redan var den primära arbetsmiljön.
 
 Detta tillvägagångssätt ger flera fördelar:
 
