@@ -3,7 +3,7 @@
 # Kör med: bash 05_verify_collection.sh
 # Kräver: mongosh och att MongoDB körs i Docker-containern 'mongodb'
 
-docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<'EOF'
+(docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<'EOF'
 
 // --- 1. Bekräfta att kollektionen innehåller exakt 10 dokument ---
 print("\n== Total documents in collection ==");
@@ -53,3 +53,4 @@ db.orders.find(
 ).sort({ totalAmount: -1 }).forEach(printjson);
 
 EOF
+) | grep -v -x '^devops25_nosql>'

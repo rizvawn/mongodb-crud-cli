@@ -3,7 +3,7 @@
 # Kör med: bash 02_read_orders.sh
 # Kräver: mongosh och att MongoDB körs i Docker-containern 'mongodb'
 
-docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<'EOF'
+(docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<'EOF'
 
 // --- 1. Alla ordrar för en specifik kund ---
 print("\n== Orders for visitor-003 ==");
@@ -36,3 +36,4 @@ db.orders.find(
 ).sort({ totalAmount: -1 }).limit(5).forEach(printjson);
 
 EOF
+) | grep -v -x '^devops25_nosql>'

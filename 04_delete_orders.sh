@@ -3,7 +3,7 @@
 # Kör med: bash 04_delete_orders.sh
 # Kräver: mongosh och att MongoDB körs i Docker-containern 'mongodb'
 
-docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<'EOF'
+(docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<'EOF'
 
 // --- 1. Radera ett specifikt dokument med deleteOne ---
 // Tar bort den avbrutna ordern för visitor-005 (Sami Bracelet, 1250 SEK)
@@ -40,3 +40,4 @@ db.orders.find(
 ).sort({ totalAmount: -1 }).forEach(printjson);
 
 EOF
+) | grep -v -x '^devops25_nosql>'

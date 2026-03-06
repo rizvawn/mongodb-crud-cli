@@ -3,7 +3,7 @@
 # Kör med: bash 03_update_orders.sh
 # Kräver: mongosh och att MongoDB körs i Docker-containern 'mongodb'
 
-docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<'EOF'
+(docker exec -i mongodb mongosh "mongodb://localhost:27017/devops25_nosql" --quiet <<'EOF'
 
 // --- 1. Ändra status på en order ---
 // visitor-002:s order på 1320 SEK ändras från "pending" till "processing"
@@ -47,3 +47,4 @@ print("== After: increment totalAmount ==");
 db.orders.findOne({ customerId: "visitor-003", totalAmount: 1180 }, { customerId: 1, totalAmount: 1, _id: 0 });
 
 EOF
+) | grep -v -x '^devops25_nosql>'
