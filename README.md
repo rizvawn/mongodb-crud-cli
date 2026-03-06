@@ -32,3 +32,6 @@ Skriptet `03_update_orders.sh` visar tre distinkta uppdateringsoperationer. Med 
 
 ### Steg 4: Radera dokument (Delete)
 Skriptet `04_delete_orders.sh` demonstrerar två raderingsoperationer. Med `deleteOne` tas den avbrutna ordern för `visitor-005` bort, ett mönster som speglar hur avbrutna transaktioner kan rensas från en aktiv kollektion. Med `deleteMany` raderas samtliga ordrar vars `totalAmount` understiger 115 kronor, vilket visar hur ett villkorsbaserat filter kan påverka flera dokument i ett enda anrop. Antalet kvarvarande dokument skrivs ut efter varje operation och kollektionen ska efter detta steg innehålla exakt tio dokument.
+
+### Steg 5: Verifiera slutresultatet (Verify)
+Skriptet `05_verify_collection.sh` sammanfattar övningen genom att bekräfta att databasen befinner sig i förväntat slutläge. Antalet dokument i kollektionen kontrolleras, de uppdaterade dokumenten visas med sina nya värden och de raderade dokumenten bekräftas vara borta. Filtret `totalAmount > 1000` körs en sista gång för att visa att det fungerar mot den slutliga datan. Skriptet fungerar som ett kvitto på att alla CRUD-operationer har utförts korrekt och i rätt ordning.
