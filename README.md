@@ -42,5 +42,8 @@ Skriptet `06_create_customers.sh` skapar kollektionen `customers` och fyller den
 ### Steg 7: Skapa kollektionen `products` (Create)
 Skriptet `07_create_products.sh` skapar kollektionen `products` med ett enda dokument. Produkten `souvenir-01` finns redan inbäddad i flera ordrar men läggs här även in som ett fristående dokument för att möjliggöra en referensbaserad uppslagning i nästa steg. Kollektionen illustrerar hur en produkt i ett referensbaserat schema skulle lagras separat istället för att dupliceras inuti varje order. Noterbart är att fältet `quantity` inte ingår i produktdokumentet då det beskriver orderraden, inte produkten i sig.
 
+### Steg 8: Referensbaserad uppslagning (Reference Lookup)
+Skriptet `08_reference_lookup.sh` visar hur två kollektioner knyts samman via ett gemensamt fält. En order hämtas ur `orders`, kollektionen och dess `customerId` används sedan för att slå upp motsvarande dokument i `customers`. Resultatet kombineras och presenteras som ett sammansatt objekt. Detta är det manuella alternativet till en JOIN i relationsdatabaser och tydliggör både styrkan och begränsningen med referensbaserad modellering i MongoDB där datan hålls normaliserad men kräver flera anrop för att sättas samman.
+
 ### Körning av hela övningen i ett steg
 Skriptet `run_all.sh` kör samtliga fem skript i rätt ordning och skriver utdata till filen `crud_report.txt` via `tee`, vilket innebär att resultatet visas i terminalen och sparas till fil samtidigt. Varje steg avgränsas med en tydlig rubrik som anger vilket skript som körs och vad det gör. Eftersom skriptet börjar med att återskapa kollektionen är övningen fullt repeterbar med ett enda kommando.
