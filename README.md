@@ -15,11 +15,13 @@ Detta tillvägagångssätt ger flera fördelar:
 ### Projektets struktur
 Övningen använder databasen `devops25_nosql` med kollektionen `orders`. Arbetet är uppdelat i fem numrerade Bash-skript som körs stegvis, ett per fas av CRUD-cykeln: skapa, läsa, uppdatera och radera dokument.
 
-Innan skripten körs startas MongoDB med ett enkelt Docker-kommando:
+Innan skripten körs behöver MongoDB köra i Docker. Containern skapas en gång med:
 `docker run -d --name mongodb -p 27017:27017 mongo:latest`
+Vid efterföljande tillfällen räcker det med:
+`docker start mongodb`
 Därefter är `mongosh` tillgängligt mot `localhost:27017`.
 
-### Steg 1: Skapa dokument (Create)
+### Steg 1: Skapa kollektionen `orders` och dess dokument (Create)
 Skriptet `01_create_seed_orders.sh` skapar kollektionen `orders` i databasen `devops25_nosql` och fyller den med femton orderdokument från en fiktiv svensk souvenirbutik. Fem kunder används genomgående i datan, identifierade som `visitor-001` till `visitor-005`. Produktsortimentet består av arton distinkta souvenirer, från dalahästar och vikingahjälmar till samiska armband och lapplandshalsdukar. Fältet `totalAmount` är förutsummat utifrån kvantitet och pris per produkt. Statusalternativen som förekommer är `delivered`, `shipped`, `pending` och `cancelled`. Anslutningen till MongoDB sker via `docker exec` mot en körande container.
 
 ### Steg 2: Hämta dokument (Read)
@@ -33,6 +35,9 @@ Skriptet `04_delete_orders.sh` demonstrerar två raderingsoperationer. Med `dele
 
 ### Steg 5: Verifiera slutresultatet (Verify)
 Skriptet `05_verify_collection.sh` sammanfattar övningen genom att bekräfta att databasen befinner sig i förväntat slutläge. Antalet dokument i kollektionen kontrolleras, de uppdaterade dokumenten visas med sina nya värden och de raderade dokumenten bekräftas vara borta. Filtret `totalAmount > 1000` körs en sista gång för att visa att det fungerar mot den slutliga datan. Skriptet fungerar som ett kvitto på att alla CRUD-operationer har utförts korrekt och i rätt ordning.
+
+### Steg 6: Skapa kollektion `customers` och dess dokument (Create)
+Skriptet `06_create_customers.sh` skapar kollektionen `customers` och fyller den med fem dokument, ett per kund som förekommer i `orders`-kollektionen. Varje dokument innehåller fälten `customerId`, `name` och `email`. Fältet `customerId` är den gemensamma nyckeln som knyter samman de två kollektionerna och möjliggör uppslagningar mellan dem.
 
 ### Körning av hela övningen i ett steg
 Skriptet `run_all.sh` kör samtliga fem skript i rätt ordning och skriver utdata till filen `crud_report.txt` via `tee`, vilket innebär att resultatet visas i terminalen och sparas till fil samtidigt. Varje steg avgränsas med en tydlig rubrik som anger vilket skript som körs och vad det gör. Eftersom skriptet börjar med att återskapa kollektionen är övningen fullt repeterbar med ett enda kommando.
