@@ -7,7 +7,7 @@ REPORT="crud_report.txt"
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 
 SCRIPTS=(
-    "01_create_seed_orders.sh|CREATE: Seed 15 orders into the collection"
+    "01_create_orders.sh|CREATE: Seed 15 orders into the collection"
     "02_read_orders.sh|READ: Query by customer, amount, sort and limit"
     "03_update_orders.sh|UPDATE: Set status, push items, increment totalAmount"
     "04_delete_orders.sh|DELETE: Remove one cancelled and four low-value orders"
