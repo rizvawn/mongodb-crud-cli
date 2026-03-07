@@ -21,8 +21,8 @@ Vid efterföljande tillfällen räcker det med:
 `docker start mongodb`
 Därefter är `mongosh` tillgängligt mot `localhost:27017`.
 
-### Steg 1: Skapa kollektionen `orders` och dess dokument (Create)
-Skriptet `01_create_orders.sh` skapar kollektionen `orders` i databasen `devops25_nosql` och fyller den med femton orderdokument från en fiktiv svensk souvenirbutik. Fem kunder används genomgående i datan, identifierade som `visitor-001` till `visitor-005`. Produktsortimentet består av arton distinkta souvenirer, från dalahästar och vikingahjälmar till samiska armband och lapplandshalsdukar. Fältet `totalAmount` är förutsummat utifrån kvantitet och pris per produkt. Statusalternativen som förekommer är `delivered`, `shipped`, `pending` och `cancelled`. Anslutningen till MongoDB sker via `docker exec` mot en körande container.
+### Steg 1: Skapa kollektionen `orders` (Create)
+Skriptet `01_create_orders.sh` skapar kollektionen `orders` i databasen `devops25_nosql` och fyller den med femton orderdokument från en fiktiv svensk souvenirbutik. Fem kunder används genomgående i datan, identifierade som `visitor-001` till `visitor-005`. Produktsortimentet består av arton distinkta souvenirer, från dalahästar och vikingahjälmar till samiska armband och lapplandshalsdukar. Fältet `totalAmount` är förutsummat utifrån kvantitet och pris per produkt. Statusalternativen som förekommer är `delivered`, `shipped`, `pending` och `cancelled`. Anslutningen till MongoDB sker via `docker exec` mot en körande container. Produktdata är avsiktligt inbäddad i ordrarna för att senare kontrasteras mot ett referensbaserat alternativ i analysen av dokumentmodeller.
 
 ### Steg 2: Hämta dokument (Read)
 Skriptet `02_read_orders.sh` visar fyra olika sätt att läsa data från kollektionen. Först hämtas samtliga ordrar kopplade till en enskild kund med ett exakt matchningsfilter. Därefter används en jämförelseoperator för att hitta ordrar vars `totalAmount` överstiger 1000 kronor. Sedan sorteras hela kollektionen på `totalAmount` i fallande ordning för att ge en överblick av köpen efter värde. Slutligen kombineras sortering och begränsning för att returnera de fem dyraste ordrarna. Projektionsparametern används för att hålla utdata läsbar.
@@ -36,8 +36,11 @@ Skriptet `04_delete_orders.sh` demonstrerar två raderingsoperationer. Med `dele
 ### Steg 5: Verifiera slutresultatet (Verify)
 Skriptet `05_verify_collection.sh` sammanfattar övningen genom att bekräfta att databasen befinner sig i förväntat slutläge. Antalet dokument i kollektionen kontrolleras, de uppdaterade dokumenten visas med sina nya värden och de raderade dokumenten bekräftas vara borta. Filtret `totalAmount > 1000` körs en sista gång för att visa att det fungerar mot den slutliga datan. Skriptet fungerar som ett kvitto på att alla CRUD-operationer har utförts korrekt och i rätt ordning.
 
-### Steg 6: Skapa kollektion `customers` och dess dokument (Create)
+### Steg 6: Skapa kollektionen `customers` (Create)
 Skriptet `06_create_customers.sh` skapar kollektionen `customers` och fyller den med fem dokument, ett per kund som förekommer i `orders`-kollektionen. Varje dokument innehåller fälten `customerId`, `name` och `email`. Fältet `customerId` är den gemensamma nyckeln som knyter samman de två kollektionerna och möjliggör uppslagningar mellan dem.
+
+### Steg 7: Skapa kollektionen `products` (Create)
+Skriptet `07_create_products.sh` skapar kollektionen `products` med ett enda dokument. Produkten `souvenir-01` finns redan inbäddad i flera ordrar men läggs här även in som ett fristående dokument för att möjliggöra en referensbaserad uppslagning i nästa steg. Kollektionen illustrerar hur en produkt i ett referensbaserat schema skulle lagras separat istället för att dupliceras inuti varje order. Noterbart är att fältet `quantity` inte ingår i produktdokumentet då det beskriver orderraden, inte produkten i sig.
 
 ### Körning av hela övningen i ett steg
 Skriptet `run_all.sh` kör samtliga fem skript i rätt ordning och skriver utdata till filen `crud_report.txt` via `tee`, vilket innebär att resultatet visas i terminalen och sparas till fil samtidigt. Varje steg avgränsas med en tydlig rubrik som anger vilket skript som körs och vad det gör. Eftersom skriptet börjar med att återskapa kollektionen är övningen fullt repeterbar med ett enda kommando.

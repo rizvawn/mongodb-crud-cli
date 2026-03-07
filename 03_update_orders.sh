@@ -47,4 +47,4 @@ print("== After: increment totalAmount ==");
 db.orders.findOne({ customerId: "visitor-003", totalAmount: 1180 }, { customerId: 1, totalAmount: 1, _id: 0 });
 
 EOF
-) | grep -v -x '^devops25_nosql>'
+) | sed 's/^devops25_nosql> //'

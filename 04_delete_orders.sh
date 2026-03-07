@@ -40,4 +40,4 @@ db.orders.find(
 ).sort({ totalAmount: -1 }).forEach(printjson);
 
 EOF
-) | grep -v -x '^devops25_nosql>'
+) | sed 's/^devops25_nosql> //'

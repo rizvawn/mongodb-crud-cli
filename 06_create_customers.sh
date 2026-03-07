@@ -40,4 +40,4 @@
     print("\nAll customers:");
     db.customers.find({}, { _id: 0 }).forEach(printjson);
 EOF
-) | grep -v -x '^devops25_nosql>'
+) | sed 's/^devops25_nosql> //'

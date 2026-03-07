@@ -151,4 +151,4 @@ db.orders.insertMany([
 print("Documents in collection: " + db.orders.countDocuments());
 
 EOF
-) | grep -v -x '^devops25_nosql>'
+) | sed 's/^devops25_nosql> //'
