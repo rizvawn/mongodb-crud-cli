@@ -3,7 +3,7 @@
 # Kör med: bash run_all.sh
 # Kräver: mongosh och att MongoDB körs i Docker-containern 'mongodb'
 
-REPORT="crud_report.txt"
+REPORT="mongodb_report.txt"
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 
 SCRIPTS=(
@@ -12,23 +12,29 @@ SCRIPTS=(
     "03_update_orders.sh|UPDATE: Set status, push items, increment totalAmount"
     "04_delete_orders.sh|DELETE: Remove one cancelled and four low-value orders"
     "05_verify_collection.sh|VERIFY: Confirm final collection state"
+    "06_create_customers.sh|CREATE: Seed 5 customers into the customers collection"
+    "07_create_products.sh|CREATE: Seed 1 product into the products collection"
+    "08_reference_lookup.sh|LOOKUP: Resolve customer from order via customerId"
+    "09_embedded_vs_referenced.sh|MODEL: Compare embedded and referenced document patterns"
+    "10_schema_validation.sh|VALIDATION: Apply JSON schema and test invalid insert"
 )
 
 {
     printf '=%.0s' {1..70}
     echo ""
-    echo "      MongoDB CRUD Exercise - devops25_nosql.orders"
-    echo "      Run: $TIMESTAMP"
+    echo "              MongoDB Exercise"
+    echo "              Run: $TIMESTAMP"
     printf '=%.0s' {1..70}
     echo ""
 
     STEP=1
+    TOTAL=${#SCRIPTS[@]}
     for ENTRY in "${SCRIPTS[@]}"; do
         SCRIPT="${ENTRY%%|*}"
         LABEL="${ENTRY##*|}"
 
         echo ""
-        echo "[ STEP $STEP of 5 ] $LABEL"
+        echo "[ STEP $STEP of $TOTAL ] $LABEL"
         printf '=%.0s' {1..70}
         echo ""
         echo "      Script: $SCRIPT"
@@ -51,8 +57,8 @@ SCRIPTS=(
     echo ""
     printf '=%.0s' {1..70}
     echo ""
-    echo "      Exercise complete."
-    echo "      Full report saved to: $REPORT"
+    echo "          Exercise complete."
+    echo "          Full report saved to: $REPORT"
     printf '=%.0s' {1..70}
     echo ""
 
