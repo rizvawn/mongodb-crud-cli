@@ -45,5 +45,20 @@ Skriptet `07_create_products.sh` skapar kollektionen `products` med ett enda dok
 ### Steg 8: Referensbaserad uppslagning (Reference Lookup)
 Skriptet `08_reference_lookup.sh` visar hur två kollektioner knyts samman via ett gemensamt fält. En order hämtas ur `orders`, kollektionen och dess `customerId` används sedan för att slå upp motsvarande dokument i `customers`. Resultatet kombineras och presenteras som ett sammansatt objekt. Detta är det manuella alternativet till en JOIN i relationsdatabaser och tydliggör både styrkan och begränsningen med referensbaserad modellering i MongoDB där datan hålls normaliserad men kräver flera anrop för att sättas samman.
 
+### Steg 9: Inbäddad kontra referensbaserad modellering
+Skriptet `09_embedded_vs_referenced.sh` kontrasterar de två grundläggande dokumentmodellerna i MongoDB. Två testordrar infogas i kollektionen `orders`: en med kunddata inbäddad direkt i dokumentet och en där `items`-arrayen enbart innehåller ett `productId` som pekar mot `products`-kollektionen.
+
+**Fördelar med referens:**
+Datan lagras på ett ställe. Om en kunds e-postadress ändras uppdateras den i `customers` och alla ordrar speglar automatiskt den nya informationen. Ingen duplicering, ingen risk för inkonsekvens.
+
+**Fördelar med inbäddning:**
+All information hämtas i ett enda anrop utan behov av en separat uppslagning. Lämpligt när datan är statisk och tillhör dokumentet kontextuellt, som orderrader vars pris och namn ska spegla exakt vad kunden köpte vid köptillfället, oavsett framtida prisändringar.
+
+**När man prioriterar referens:**
+När datan delas mellan många dokument, uppdateras ofta eller är stor. Kundprofiler, produktkataloger och kategorier är typiska kandidater.
+
+**När man prioriterar inbäddning:**
+När datan är unik per dokument, sällan ändras och alltid läses tillsammans med sitt föräldradokument. Orderrader och adresser vid köptillfället är klassiska exempel.
+
 ### Körning av hela övningen i ett steg
 Skriptet `run_all.sh` kör samtliga fem skript i rätt ordning och skriver utdata till filen `crud_report.txt` via `tee`, vilket innebär att resultatet visas i terminalen och sparas till fil samtidigt. Varje steg avgränsas med en tydlig rubrik som anger vilket skript som körs och vad det gör. Eftersom skriptet börjar med att återskapa kollektionen är övningen fullt repeterbar med ett enda kommando.
