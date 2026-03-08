@@ -1,7 +1,6 @@
-# MongoDB: CRUD-operationer med Bash och mongosh
+# MongoDB: CRUD, modellering och schemavalidering via Bash
 
-Detta projekt är en övning med MongoDB där fokus ligger på de mest grundläggande
-koncepten.
+Detta projekt är en övning med MongoDB där fokus ligger på de mest grundläggande koncept som CRUD-operationer, dokumentmodellering, schemavalidering och automatisering via Bash-skript.
 
 ### Varför Bash och CLI?
 Kommandoraden valdes framför grafiska verktyg som MongoDB Atlas och Compass för att arbeta direkt mot databasen utan mellanlager. Det ger en tydligare förståelse för hur MongoDB faktiskt fungerar. Valet föll sig också naturligt efter en period av aktivt arbete med Linux och terminalmiljön, där CLI redan var den primära arbetsmiljön.
