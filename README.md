@@ -60,5 +60,10 @@ När datan delas mellan många dokument, uppdateras ofta eller är stor. Kundpro
 **När man prioriterar inbäddning:**
 När datan är unik per dokument, sällan ändras och alltid läses tillsammans med sitt föräldradokument. Orderrader och adresser vid köptillfället är klassiska exempel.
 
+### Steg 10: Schemavalidering (Schema Validation)
+Skriptet `10_schema_validation.sh` tillämpar en JSON Schema-validator på kollektionen `orders` med `collMod`. Valideringen kräver att alla fem fält är närvarande, att `totalAmount` är ett icke-negativt tal och att `status` är ett av de fördefinierade värdena. Valideringsnivån är satt till `strict` och åtgärden till `error`, vilket innebär att MongoDB aktivt nekar icke-konforma dokument.
+
+För att testa valideringen görs ett försök att infoga ett dokument som saknar `createdAt` och `items`, har ett negativt `totalAmount` och en ogiltig `status`. MongoDB kastar ett fel `DocumentValidationFailure` och dokumentet skrivs aldrig till kollektionen. Dokumentantalet förblir oförändrat, vilket bekräftas i det sista steget. Schemavalidering är ett effektivt sätt att upprätthålla dataintegritet direkt i databasen, oberoende av applikationslagret.
+
 ### Körning av hela övningen i ett steg
 Skriptet `run_all.sh` kör samtliga fem skript i rätt ordning och skriver utdata till filen `crud_report.txt` via `tee`, vilket innebär att resultatet visas i terminalen och sparas till fil samtidigt. Varje steg avgränsas med en tydlig rubrik som anger vilket skript som körs och vad det gör. Eftersom skriptet börjar med att återskapa kollektionen är övningen fullt repeterbar med ett enda kommando.
