@@ -13,7 +13,7 @@ Detta tillvägagångssätt ger flera fördelar:
 - **Miljöhantering**: Genom att köra MongoDB i Docker säkerställs en isolerad och ren utvecklingsmiljö som är lätt att sätta upp och ta bort.
 
 ### Projektets struktur
-Övningen använder databasen `devops25_nosql` med kollektionen `orders`. Arbetet är uppdelat i fem numrerade Bash-skript som körs stegvis, ett per fas av CRUD-cykeln: skapa, läsa, uppdatera och radera dokument.
+Övningen använder databasen `devops25_nosql` med kollektioner `orders`, `customers` och `products`. Arbetet är uppdelat i tio numrerade Bash-skript som körs stegvis. De fem första täcker CRUD-cykeln mot `orders`. De efterföljande fem hanterar kunddata, produktreferenser, uppslagningar mellan kollektioner, jämförelse av dokumentmodeller och schemavalidering.
 
 Innan skripten körs behöver MongoDB köra i Docker. Containern skapas en gång med:
 `docker run -d --name mongodb -p 27017:27017 mongo:latest`
@@ -66,4 +66,4 @@ Skriptet `10_schema_validation.sh` tillämpar en JSON Schema-validator på kolle
 För att testa valideringen görs ett försök att infoga ett dokument som saknar `createdAt` och `items`, har ett negativt `totalAmount` och en ogiltig `status`. MongoDB kastar ett fel `DocumentValidationFailure` och dokumentet skrivs aldrig till kollektionen. Dokumentantalet förblir oförändrat, vilket bekräftas i det sista steget. Schemavalidering är ett effektivt sätt att upprätthålla dataintegritet direkt i databasen, oberoende av applikationslagret.
 
 ### Körning av hela övningen i ett steg
-Skriptet `run_all.sh` kör samtliga fem skript i rätt ordning och skriver utdata till filen `crud_report.txt` via `tee`, vilket innebär att resultatet visas i terminalen och sparas till fil samtidigt. Varje steg avgränsas med en tydlig rubrik som anger vilket skript som körs och vad det gör. Eftersom skriptet börjar med att återskapa kollektionen är övningen fullt repeterbar med ett enda kommando.
+Skriptet `run_all.sh` kör samtliga tio skript i rätt ordning och skriver utdata till filen `mongodb_report.txt` via `tee`, vilket innebär att resultatet visas i terminalen och sparas till fil samtidigt. Antalet steg beräknas dynamiskt utifrån skriptlistan, vilket gör det enkelt att utöka övningen utan att uppdatera skriptet manuellt. Varje steg avgränsas med en tydlig rubrik som anger vilket skript som körs och vad det gör. Eftersom skriptet börjar med att återskapa alla kollektioner är hela övningen fullt repeterbar med ett enda kommando.
