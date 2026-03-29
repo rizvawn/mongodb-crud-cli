@@ -13,10 +13,12 @@ SCRIPTS=(
     "04_delete_orders.sh|DELETE: Remove one cancelled and four low-value orders"
     "05_verify_collection.sh|VERIFY: Confirm final collection state"
     "06_create_customers.sh|CREATE: Seed 5 customers into the customers collection"
-    "07_create_products.sh|CREATE: Seed 1 product into the products collection"
+    "07_create_products.sh|CREATE: Seed 5 products into the products collection"
     "08_reference_lookup.sh|LOOKUP: Resolve customer from order via customerId"
     "09_embedded_vs_referenced.sh|MODEL: Compare embedded and referenced document patterns"
     "10_schema_validation.sh|VALIDATION: Apply JSON schema and test invalid insert"
+    "11_crud_customers.sh|CRUD: Read, update and delete on the customers collection"
+    "12_crud_products.sh|CRUD: Read, update and delete on the products collection"
 )
 
 {
