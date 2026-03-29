@@ -12,7 +12,7 @@ Detta tillvägagångssätt ger flera fördelar:
 - **Miljöhantering**: Genom att köra MongoDB i Docker säkerställs en isolerad och ren utvecklingsmiljö som är lätt att sätta upp och ta bort.
 
 ### Projektets struktur
-Övningen använder databasen `devops25_nosql` med kollektioner `orders`, `customers` och `products`. Arbetet är uppdelat i tio numrerade Bash-skript som körs stegvis. De fem första täcker CRUD-cykeln mot `orders`. De efterföljande fem hanterar kunddata, produktreferenser, uppslagningar mellan kollektioner, jämförelse av dokumentmodeller och schemavalidering.
+Övningen använder databasen `devops25_nosql` med kollektioner `orders`, `customers` och `products`. Arbetet är uppdelat i tolv numrerade Bash-skript som körs stegvis. De fem första täcker CRUD-cykeln mot `orders`. De efterföljande sju hanterar kunddata, produktreferenser, uppslagningar mellan kollektioner, jämförelse av dokumentmodeller, schemavalidering samt fullständiga CRUD-operationer mot `customers` och `products`.
 
 Innan skripten körs behöver MongoDB köra i Docker. Containern skapas en gång med:
 `docker run -d --name mongodb -p 27017:27017 mongo:latest`
@@ -39,7 +39,7 @@ Skriptet `05_verify_collection.sh` sammanfattar övningen genom att bekräfta at
 Skriptet `06_create_customers.sh` skapar kollektionen `customers` och fyller den med fem dokument, ett per kund som förekommer i `orders`-kollektionen. Varje dokument innehåller fälten `customerId`, `name` och `email`. Fältet `customerId` är den gemensamma nyckeln som knyter samman de två kollektionerna och möjliggör uppslagningar mellan dem.
 
 ### Steg 7: Skapa kollektionen `products` (Create)
-Skriptet `07_create_products.sh` skapar kollektionen `products` med ett enda dokument. Produkten `souvenir-01` finns redan inbäddad i flera ordrar men läggs här även in som ett fristående dokument för att möjliggöra en referensbaserad uppslagning i nästa steg. Kollektionen illustrerar hur en produkt i ett referensbaserat schema skulle lagras separat istället för att dupliceras inuti varje order. Noterbart är att fältet `quantity` inte ingår i produktdokumentet då det beskriver orderraden, inte produkten i sig.
+Skriptet `07_create_products.sh` skapar kollektionen `products` och fyller den med fem dokument. Produkterna matchar ett urval av de `productId`-värden som förekommer inbäddade i `orders`-kollektionen och lägger nu till fältet `category` som kategoriserar produkttypen. Kollektionen illustrerar hur produkter i ett referensbaserat schema lagras separat istället för att dupliceras inuti varje order. Noterbart är att fältet `quantity` inte ingår i produktdokumenten då det beskriver orderraden, inte produkten i sig.
 
 ### Steg 8: Referensbaserad uppslagning (Reference Lookup)
 Skriptet `08_reference_lookup.sh` visar hur två kollektioner knyts samman via ett gemensamt fält. En order hämtas ur `orders`, kollektionen och dess `customerId` används sedan för att slå upp motsvarande dokument i `customers`. Resultatet kombineras och presenteras som ett sammansatt objekt. Detta är det manuella alternativet till en JOIN i relationsdatabaser och tydliggör både styrkan och begränsningen med referensbaserad modellering i MongoDB där datan hålls normaliserad men kräver flera anrop för att sättas samman.
@@ -64,5 +64,11 @@ Skriptet `10_schema_validation.sh` tillämpar en JSON Schema-validator på kolle
 
 För att testa valideringen görs ett försök att infoga ett dokument som saknar `createdAt` och `items`, har ett negativt `totalAmount` och en ogiltig `status`. MongoDB kastar ett fel `DocumentValidationFailure` och dokumentet skrivs aldrig till kollektionen. Dokumentantalet förblir oförändrat, vilket bekräftas i det sista steget. Schemavalidering är ett effektivt sätt att upprätthålla dataintegritet direkt i databasen, oberoende av applikationslagret.
 
+### Steg 11: CRUD mot `customers` (Read, Update, Delete)
+Skriptet `11_crud_customers.sh` kompletterar CRUD-cykeln för `customers`-kollektionen. READ-delen visar tre frågmönster: hämtning av alla kunder, exakt matchning på `customerId` och sortering av hela kollektionen på namn i bokstavsordning. UPDATE-steget ändrar e-postadressen för `visitor-004` med `$set` och visar dokumentet före och efter. DELETE-steget tar bort `visitor-005` med `deleteOne`, bekräftar det minskade dokumentantalet och verifierar att dokumentet är borta. Tillsammans med skript 06 täcker detta hela CRUD-cykeln mot `customers`-kollektionen.
+
+### Steg 12: CRUD mot `products` (Read, Update, Delete)
+Skriptet `12_crud_products.sh` kompletterar CRUD-cykeln för `products`-kollektionen. READ-delen hämtar hela sortimentet, filtrerar på produkter med pris under 100 kronor och sorterar alla produkter stigande på pris. UPDATE-steget höjer priset på `souvenir-02` med `$set` och visar dokumentet före och efter. DELETE-steget tar bort `souvenir-05` med `deleteOne`, bekräftar det minskade dokumentantalet och verifierar att dokumentet är borta. Tillsammans med skript 07 täcker detta hela CRUD-cykeln mot `products`-kollektionen.
+
 ### Körning av hela övningen i ett steg
-Skriptet `run_all.sh` kör samtliga tio skript i rätt ordning och skriver utdata till filen `mongodb_report.txt` via `tee`, vilket innebär att resultatet visas i terminalen och sparas till fil samtidigt. Antalet steg beräknas dynamiskt utifrån skriptlistan, vilket gör det enkelt att utöka övningen utan att uppdatera skriptet manuellt. Varje steg avgränsas med en tydlig rubrik som anger vilket skript som körs och vad det gör. Eftersom skriptet börjar med att återskapa alla kollektioner är hela övningen fullt repeterbar med ett enda kommando.
+Skriptet `run_all.sh` kör samtliga tolv skript i rätt ordning och skriver utdata till filen `mongodb_report.txt` via `tee`, vilket innebär att resultatet visas i terminalen och sparas till fil samtidigt. Antalet steg beräknas dynamiskt utifrån skriptlistan, vilket gör det enkelt att utöka övningen utan att uppdatera skriptet manuellt. Varje steg avgränsas med en tydlig rubrik som anger vilket skript som körs och vad det gör. Eftersom skriptet börjar med att återskapa alla kollektioner är hela övningen fullt repeterbar med ett enda kommando.
